@@ -20,3 +20,6 @@ Route::get('/', 'ItemController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//商品ページ
+Route::get('/item/{item}', 'ItemController@show');

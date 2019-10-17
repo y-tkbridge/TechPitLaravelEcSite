@@ -12,11 +12,17 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $item = Item::paginate(15);
-        return view('item/index', ['items' => $item]);
+        $limit_view_item = 15;
+        if ($request->has('keyword')) {
+            $items = Item::where('name', 'like', '%' . $request->get('keyword') . '%')->paginate($limit_view_item);
+        } else {
+            //ページネーション
+            $items = Item::paginate($limit_view_item);
+        }
+
+        return view('item/index', ['items' => $items]);
     }
 
     /**
@@ -49,6 +55,7 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         //
+        return view('item/show', ['item' => $item]);
     }
 
     /**
